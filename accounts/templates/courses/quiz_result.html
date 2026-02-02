@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-5 d-flex justify-content-center">
+  <div class="card shadow-lg border-0 rounded-4 p-5 text-center" style="max-width:400px;">
+    <h3 class="fw-bold mb-3">{{ language.name }} Quiz Result</h3>
+
+    <h4 class="text-orange">Score</h4>
+    <p class="fs-4 fw-bold">{{ score }}/{{ total }}</p>
+
+    <div class="progress mb-3" style="height:8px;">
+      <div class="progress-bar bg-orange" style="width: {{ percentage }}%;"></div>
+    </div>
+
+    <p class="fw-semibold">Percentage: {{ percentage }}%</p>
+
+    <a href="{% url 'languages_list' %}" class="btn btn-orange rounded-pill mt-3 px-4">
+      
+    </a>
+
+    {% if wrong_answers %}
+    <div class="mt-4 text-left">
+      <h5 class="text-danger">Wrong Answers</h5>
+      <ul class="list-group">
+        {% for item in wrong_answers %}
+          <li class="list-group-item">
+            <strong>{{ item.question }}</strong><br>
+            Your Answer: <span class="text-warning">{{ item.selected }}</span><br>
+            Correct Answer: <span class="text-success">{{ item.correct }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<style>
+.bg-orange {
+  background:#ff5a3c !important;
+}
+.btn-orange {
+  background:#ff5a3c;
+  color:#fff;
+  font-weight:600;
+}
+.btn-orange:hover {
+  background:#ff7a5c;
+}
+.text-orange {
+  color:#ff5a3c;
+}
+</style>
+
+{% endblock %}

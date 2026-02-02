@@ -1,0 +1,11 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.navbar-brand {
+    letter-spacing: 1px;
+}
+
+footer {
+    margin-top: 100px;
+}

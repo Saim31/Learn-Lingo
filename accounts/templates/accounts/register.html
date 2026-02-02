@@ -1,0 +1,382 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register | LearnLingo</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: "Roboto", sans-serif;
+      background: #f4f6fb;
+    }
+
+    /* ================= NAVBAR ================= */
+    .custom-navbar {
+      background: #ffffff;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+      padding: 14px 0;
+    }
+
+    .navbar-brand {
+      font-size: 26px;
+      font-weight: 800;
+      color: #0b1c39 !important;
+    }
+
+    .navbar-brand span {
+      color: #ff5a3c;
+    }
+
+    .nav-link {
+      color: #0b1c39 !important;
+      font-weight: 600;
+      margin: 0 8px;
+    }
+
+    .nav-signup {
+      background: #ff5a3c;
+      color: #fff;
+      padding: 8px 22px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .nav-signup:hover {
+      background: #e94b2f;
+      color: #fff;
+    }
+
+    /* ================= FORM ================= */
+    .btn-orange {
+      background: #ff5a3c;
+      color: #fff;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .btn-orange:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 90, 60, 0.4);
+      background: #ff7a5c;
+    }
+
+    .form-control:focus {
+      border-color: #ff5a3c;
+      box-shadow: 0 0 10px rgba(255, 90, 60, 0.3);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      transition: all 0.3s ease-in-out;
+    }
+
+    .text-orange {
+      color: #ff5a3c !important;
+    }
+
+    .text-orange:hover {
+      color: #ff7a5c !important;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg fixed-top custom-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">Learn<span>Lingo</span></a>
+
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="nav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'languages_list' %}">Languages</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+        <li class="nav-item ms-3">
+          <a class="btn nav-signup" href="{% url 'register' %}">Sign Up</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Spacer -->
+<div style="margin-top:90px;"></div>
+
+<!-- ================= REGISTER ================= -->
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+
+      <div class="card shadow-lg border-0 rounded-4 overflow-hidden" data-aos="fade-up">
+
+        <div class="card-header text-white text-center py-5" style="background:#ff5a3c">
+          <h2 class="mb-1 fw-bold">Create Your Account</h2>
+          <p class="mb-0 small">Join LearnLingo and start learning languages today!</p>
+        </div>
+
+        <div class="card-body p-5" style="background-color:#fff8f0">
+
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-success rounded-3">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+
+          <form method="POST" class="row g-3">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div class="col-12">{{ form.first_name.label_tag }} {{ form.first_name }} {{ form.first_name.errors }}</div>
+            <div class="col-12">{{ form.last_name.label_tag }} {{ form.last_name }} {{ form.last_name.errors }}</div>
+            <div class="col-12">{{ form.username.label_tag }} {{ form.username }} {{ form.username.errors }}</div>
+            <div class="col-12">{{ form.email.label_tag }} {{ form.email }} {{ form.email.errors }}</div>
+            <div class="col-12">{{ form.password1.label_tag }} {{ form.password1 }} {{ form.password1.errors }}</div>
+            <div class="col-12">{{ form.password2.label_tag }} {{ form.password2 }} {{ form.password2.errors }}</div>
+
+            <div class="col-12 d-flex justify-content-center mt-4">
+              <button type="submit" class="btn btn-orange btn-lg rounded-pill px-5 py-2 shadow">
+                Sign Up
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="card-footer text-center py-3 bg-light">
+          <small>
+            Already have an account?
+            <a href="{% url 'login' %}" class="text-orange fw-bold">Login</a>
+          </small>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer" data-aos="fade-up" data-aos-duration="1000">
+      <div class="container">
+        <div class="row">
+          <!-- BRAND / ABOUT -->
+          <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-right">
+            <h5 class="footer-brand">Learn<span>Lingo</span></h5>
+            <p class="footer-text">
+              Learn languages step by step with structured lessons, quizzes, and
+              progress tracking.
+            </p>
+          </div>
+
+          <!-- QUICK LINKS -->
+          <div class="col-lg-2 col-md-6 mb-4">
+            <h6 class="footer-title">Quick Links</h6>
+            <ul class="footer-links">
+              <li><a href="/">Home</a></li>
+              <li><a href="{% url 'languages_list' %}">Languages</a></li>
+              <li><a href="{% url 'login' %}">Login</a></li>
+              <li><a href="{% url 'register' %}">Sign Up</a></li>
+            </ul>
+          </div>
+
+          <!-- TOP LINKS -->
+          <div class="col-lg-2 col-md-6 mb-4">
+            <h6 class="footer-title">Top Links</h6>
+            <ul class="footer-links">
+              <li><a href="#">English</a></li>
+              <li><a href="#">French</a></li>
+              <li><a href="#">German</a></li>
+              <li><a href="#">Spanish</a></li>
+            </ul>
+          </div>
+
+          <!-- POPULAR TOPICS -->
+          <div class="col-lg-2 col-md-6 mb-4">
+            <h6 class="footer-title">Popular Topics</h6>
+            <ul class="footer-links">
+              <li><a href="#">Grammar</a></li>
+              <li><a href="#">Vocabulary</a></li>
+              <li><a href="#">Speaking</a></li>
+              <li><a href="#">Listening</a></li>
+            </ul>
+          </div>
+
+          <!-- NEWSLETTER -->
+          <form class="form-inline">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              class="email-input"
+            />
+            <button type="submit" class="submit-btn">Submit</button>
+          </form>
+        </div>
+
+        <!-- COPYRIGHT -->
+        <div class="footer-bottom text-center mt-4">
+          © {{ year|default:2026 }} LearnLingo. All Rights Reserved.
+        </div>
+      </div>
+    </footer>
+
+    <style>
+      /* ================= FOOTER ================= */
+      .site-footer {
+        background: #1f2756;
+        padding: 80px 0 40px;
+        color: #e6e9ff;
+        position: relative;
+      }
+
+      /* Top gradient line */
+      .site-footer::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #ff5a3c, transparent);
+      }
+
+      /* BRAND */
+      .footer-brand {
+        font-size: 24px;
+        font-weight: 800;
+        color: #ffffff;
+        margin-bottom: 12px;
+      }
+
+      .footer-brand span {
+        color: #ff5a3c;
+      }
+
+      /* DESCRIPTION */
+      .footer-text {
+        font-size: 14px;
+        line-height: 1.7;
+        opacity: 0.85;
+        max-width: 420px;
+      }
+
+      /* SECTION TITLES */
+      .footer-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 15px;
+      }
+
+      /* LINKS */
+      .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .footer-links li {
+        margin-bottom: 10px;
+      }
+
+      .footer-links a {
+        color: #e6e9ff !important;
+        font-size: 14px;
+        text-decoration: none;
+        opacity: 0.85;
+        transition: all 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: #ff5a3c !important;
+        padding-left: 6px;
+      }
+
+      .form-inline {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .email-input {
+        padding: 10px 15px;
+        font-size: 16px;
+      }
+
+      .submit-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        color: #ff5a3c;
+      }
+
+      .footer-form input {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        font-size: 14px;
+      }
+
+      .footer-form input::placeholder {
+        color: #888;
+      }
+
+      .footer-form button {
+        background: #ff5a3c;
+        color: #fff;
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .footer-form button:hover {
+        background: #e94b2f;
+        transform: translateY(-2px);
+      }
+
+      /* COPYRIGHT */
+      .footer-bottom {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 14px;
+        opacity: 0.8;
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 768px) {
+        .site-footer {
+          text-align: left;
+        }
+
+        .footer-form {
+          max-width: 280px;
+        }
+      }
+    </style>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init();</script>
+
+</body>
+</html>

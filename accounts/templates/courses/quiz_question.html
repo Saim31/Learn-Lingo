@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container text-center mt-5">
+
+  <h5>Question {{ index }} / {{ total }}</h5>
+  <h3 class="mb-4">{{ question.question }}</h3>
+
+  <form method="POST">
+    {% csrf_token %}
+    <div class="row justify-content-center">
+
+      {% for option in question.options %}
+      <div class="col-md-4 mb-3">
+        <button class="option-card" name="answer" value="{{ option.text }}">
+          <img src="{% static option.image %}" class="img-fluid">
+          <p class="fw-bold mt-2">{{ option.text }}</p>
+        </button>
+      </div>
+      {% endfor %}
+
+    </div>
+  </form>
+
+</div>
+
+<style>
+.option-card {
+  width: 100%;
+  border: 2px solid #ddd;
+  border-radius: 14px;
+  padding: 15px;
+  background: #fff;
+}
+.option-card img {
+  height: 120px;
+}
+.option-card:hover {
+  border-color: #58cc02;
+}
+</style>
+
+{% endblock %}

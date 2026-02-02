@@ -1,0 +1,611 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}LearnLingo{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+      }
+      .hero {
+        background: linear-gradient(to right, #6a11cb, #2575fc);
+        color: white;
+        padding: 120px 0;
+      }
+      .hero h1 {
+        font-size: 3rem;
+        font-weight: 700;
+      }
+      .hero p {
+        font-size: 1.25rem;
+        margin-bottom: 30px;
+      }
+      .feature-card {
+        transition: transform 0.3s;
+      }
+      .feature-card:hover {
+        transform: translateY(-10px);
+      }
+      footer {
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+
+  <body class="bg-light">
+   <!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg fixed-top custom-navbar" data-aos="fade-down">
+  <div class="container">
+    <!-- BRAND -->
+    <a class="navbar-brand brand-animate" href="/">
+      Learn<span>Lingo</span>
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+
+        <li class="nav-item">
+          <a class="nav-link active" href="/">Home</a>
+        </li>
+
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <form method="POST" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button class="btn btn-link nav-link nav-logout" type="submit">
+                Logout
+              </button>
+            </form>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+          <li class="nav-item ms-lg-3">
+            <a class="btn nav-signup" href="{% url 'register' %}">
+              Sign Up
+            </a>
+          </li>
+        {% endif %}
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <style>
+      /* ================= NAVBAR ================= */
+      .custom-navbar {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 14px 0;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+      }
+
+      /* BRAND */
+      .navbar-brand {
+        font-size: 26px;
+        font-weight: 800;
+        color: #0b1c39 !important;
+        letter-spacing: 0.5px;
+      }
+
+      /* ORANGE PART */
+      .navbar-brand span {
+        color: #ff5a3c;
+      }
+
+      /* BRAND ANIMATION */
+      .brand-animate {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .brand-animate::after {
+        content: "";
+        position: absolute;
+        left: -100%;
+        bottom: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, #ff5a3c, #ff8a3c);
+        animation: brandSlide 2.5s infinite;
+      }
+
+      @keyframes brandSlide {
+        0% {
+          left: -100%;
+        }
+        50% {
+          left: 100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+
+      /* LINKS */
+      .nav-link {
+        color: #0b1c39 !important;
+        font-weight: 600;
+        margin: 0 8px;
+        position: relative;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        background: #ff5a3c;
+        left: 0;
+        bottom: -6px;
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after,
+      .nav-link.active::after {
+        width: 100%;
+      }
+
+      /* SIGN UP BUTTON */
+      .nav-signup {
+        background: #ff5a3c;
+        color: #fff;
+        padding: 8px 22px;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .nav-signup:hover {
+        background: #e94b2f;
+        color: #fff;
+        transform: translateY(-2px);
+      }
+
+      /* LOGOUT */
+      .nav-logout {
+        color: #ff5a3c !important;
+        font-weight: 600;
+      }
+
+      /* MOBILE */
+      .navbar-toggler {
+        border: none;
+      }
+
+      .navbar-toggler:focus {
+        box-shadow: none;
+      }
+    </style>
+
+    <!-- Spacer for fixed navbar -->
+    <div style="margin-top: 80px"></div>
+
+    <!-- ================= HERO SECTION ================= -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="row align-items-center">
+          <!-- LEFT CONTENT -->
+          <div class="col-lg-6 hero-content" data-aos="fade-right">
+            <span class="hero-badge">Professional Language School</span>
+
+            <h1>
+              Institutional Legacy <br />
+              Standing Language <br />
+              Learning
+            </h1>
+
+            <p>
+              At our language school, we take great pride in our legacy of
+              excellence in education. With a rich history and a tradition of
+              delivering top-notch language programs.
+            </p>
+
+            <div class="hero-buttons">
+              {% if not user.is_authenticated %}
+              <a
+                href="{% url 'register' %}"
+                class="btn btn-light btn-lg me-2 hero-btn-primary"
+              >
+                Get Started →
+              </a>
+              <a
+                href="{% url 'login' %}"
+                class="btn btn-outline-light btn-lg hero-btn-secondary"
+              >
+                Login
+              </a>
+              {% else %}
+              <a href="{% url 'home' %}" class="btn btn-light btn-lg hero-btn-primary">
+  Get Started →
+</a>
+
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- RIGHT IMAGE -->
+          <div class="col-lg-6 text-center hero-image" data-aos="fade-left">
+            <img
+              src="{% static 'images/hero-section.jpg' %}"
+              alt="Language Learning"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+    <style>
+      /* ================= HERO SECTION ================= */
+      .hero-section {
+        background: #eef2ff;
+        padding: 90px 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Badge */
+      .hero-badge {
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 12px;
+      }
+
+      /* Text */
+      .hero-content h1 {
+        font-size: 48px;
+        font-weight: 800;
+        color: #0b1c39;
+        line-height: 1.2;
+        margin-bottom: 20px;
+      }
+
+      .hero-content p {
+        font-size: 16px;
+        color: #555;
+        max-width: 520px;
+        margin-bottom: 30px;
+      }
+
+      /* Buttons wrapper */
+      .hero-buttons {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      /* COMMON BUTTON STYLE */
+      .hero-buttons .btn {
+        padding: 14px 30px;
+        font-size: 15px;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
+
+      /* PRIMARY (ORANGE) BUTTON */
+      .hero-btn-primary {
+        background-color: #ff5a3c;
+        color: #fff !important;
+        border: none;
+      }
+
+      .hero-btn-primary:hover {
+        background-color: #e94b2f;
+        color: #fff !important;
+      }
+
+      /* SECONDARY OUTLINE BUTTON */
+      .hero-btn-secondary {
+        background: transparent;
+        color: #ff5a3c !important;
+        border: 2px solid #ff5a3c;
+      }
+
+      .hero-btn-secondary:hover {
+        background-color: #ff5a3c;
+        color: #fff !important;
+      }
+
+      /* HERO IMAGE */
+      .hero-image img {
+        width: 400px;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 50%;
+        animation: float 3s ease-in-out infinite;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      /* FLOAT ANIMATION */
+      @keyframes float {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-12px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 768px) {
+        .hero-content h1 {
+          font-size: 36px;
+        }
+
+        .hero-buttons {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .hero-image img {
+          width: 280px;
+          height: 280px;
+          margin-top: 30px;
+        }
+      }
+    </style>
+
+  
+
+    
+  
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="container my-5">{% block content %} {% endblock %}</main>
+    <!-- ================= FOOTER ================= -->
+    <footer class="site-footer" data-aos="fade-up" data-aos-duration="1000">
+      <div class="container">
+        <div class="row">
+          <!-- BRAND / ABOUT -->
+          <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-right">
+            <h5 class="footer-brand">Learn<span>Lingo</span></h5>
+            <p class="footer-text">
+              Learn languages step by step with structured lessons, quizzes, and
+              progress tracking.
+            </p>
+          </div>
+
+          <!-- QUICK LINKS -->
+          <div class="col-lg-2 col-md-6 mb-4">
+            <h6 class="footer-title">Quick Links</h6>
+            <ul class="footer-links">
+              <li><a href="/">Home</a></li>
+              <li><a href="{% url 'languages_list' %}">Languages</a></li>
+              <li><a href="{% url 'login' %}">Login</a></li>
+              <li><a href="{% url 'register' %}">Sign Up</a></li>
+            </ul>
+          </div>
+
+          <!-- TOP LINKS -->
+          <div class="col-lg-2 col-md-6 mb-4">
+            <h6 class="footer-title">Top Links</h6>
+            <ul class="footer-links">
+              <li><a href="#">English</a></li>
+              <li><a href="#">French</a></li>
+              <li><a href="#">German</a></li>
+              <li><a href="#">Spanish</a></li>
+            </ul>
+          </div>
+
+          <!-- POPULAR TOPICS -->
+          <div class="col-lg-2 col-md-6 mb-4">
+            <h6 class="footer-title">Popular Topics</h6>
+            <ul class="footer-links">
+              <li><a href="#">Grammar</a></li>
+              <li><a href="#">Vocabulary</a></li>
+              <li><a href="#">Speaking</a></li>
+              <li><a href="#">Listening</a></li>
+            </ul>
+          </div>
+
+          <!-- NEWSLETTER -->
+          <form class="form-inline">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              class="email-input"
+            />
+            <button type="submit" class="submit-btn">Submit</button>
+          </form>
+        </div>
+
+        <!-- COPYRIGHT -->
+         
+        <div class="footer-bottom text-center mt-4">
+          © {{ year|default:2026 }} LearnLingo. Made By Muhammad Saim.
+        </div>
+      </div>
+    </footer>
+
+    <style>
+      /* ================= FOOTER ================= */
+      .site-footer {
+        background: #1f2756;
+        padding: 80px 0 40px;
+        color: #e6e9ff;
+        position: relative;
+      }
+
+      /* Top gradient line */
+      .site-footer::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #ff5a3c, transparent);
+      }
+
+      /* BRAND */
+      .footer-brand {
+        font-size: 24px;
+        font-weight: 800;
+        color: #ffffff;
+        margin-bottom: 12px;
+      }
+
+      .footer-brand span {
+        color: #ff5a3c;
+      }
+
+      /* DESCRIPTION */
+      .footer-text {
+        font-size: 14px;
+        line-height: 1.7;
+        opacity: 0.85;
+        max-width: 420px;
+      }
+
+      /* SECTION TITLES */
+      .footer-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 15px;
+      }
+
+      /* LINKS */
+      .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .footer-links li {
+        margin-bottom: 10px;
+      }
+
+      .footer-links a {
+        color: #e6e9ff !important;
+        font-size: 14px;
+        text-decoration: none;
+        opacity: 0.85;
+        transition: all 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: #ff5a3c !important;
+        padding-left: 6px;
+      }
+
+      .form-inline {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .email-input {
+        padding: 10px 15px;
+        font-size: 16px;
+      }
+
+      .submit-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        color: #ff5a3c;
+      }
+
+      .footer-form input {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        font-size: 14px;
+      }
+
+      .footer-form input::placeholder {
+        color: #888;
+      }
+
+      .footer-form button {
+        background: #ff5a3c;
+        color: #fff;
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .footer-form button:hover {
+        background: #e94b2f;
+        transform: translateY(-2px);
+      }
+
+      /* COPYRIGHT */
+      .footer-bottom {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 14px;
+        opacity: 0.8;
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 768px) {
+        .site-footer {
+          text-align: left;
+        }
+
+        .footer-form {
+          max-width: 280px;
+        }
+      }
+    </style>
+
+    <!-- ================= SCRIPTS ================= -->
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- AOS Animation JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 1000,
+        once: true,
+      });
+    </script>
+  </body>
+</html>

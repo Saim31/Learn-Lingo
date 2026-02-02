@@ -1,0 +1,53 @@
+  {% load static %}
+  <!-- ================= FEATURES / LANGUAGES PREVIEW ================= -->
+    <section class="py-5 bg-white">
+  <div class="container">
+    <h2 class="text-center mb-5" data-aos="fade-down">Explore Languages</h2>
+
+    <div class="row justify-content-center">
+      {% for language in languages %}
+      <div class="col-md-3 mb-4 text-center" data-aos="zoom-in">
+        <a href="{% url 'language_detail' language.id %}" class="language-circle">
+          {% if language.icon %}
+            <img src="{{ language.icon.url }}" class="circle-icon" />
+          {% else %}
+            <div class="circle-icon text-white">
+              {{ language.name|slice:":1" }}
+            </div>
+          {% endif %}
+        </a>
+        <h5 class="mt-3">{{ language.name }}</h5>
+      </div>
+      {% empty %}
+      <p class="text-center">No languages added yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<style>
+.language-circle {
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #0d6efd;
+  margin: 0 auto;
+  text-decoration: none;
+}
+
+.circle-icon {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.language-circle .circle-icon {
+  font-size: 40px;
+  font-weight: 700;
+  color: #fff;
+}
+
+</style>

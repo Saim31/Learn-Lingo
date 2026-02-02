@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 text-center" data-aos="fade-up">
+
+  <h2 class="mb-3">{{ language.name }} Practice</h2>
+
+  {% if exercise %}
+  <div class="card p-4 shadow-sm">
+
+    <h3 class="mb-4">
+      What is <strong>{{ exercise.question_word }}</strong>
+      in {{ language.name }}?
+    </h3>
+
+    <div class="row justify-content-center">
+      <div class="col-md-4 mb-3">
+        <button class="btn btn-outline-primary w-100 option-btn">
+          {{ exercise.option_1 }}
+        </button>
+      </div>
+      <div class="col-md-4 mb-3">
+        <button class="btn btn-outline-primary w-100 option-btn">
+          {{ exercise.option_2 }}
+        </button>
+      </div>
+      <div class="col-md-4 mb-3">
+        <button class="btn btn-outline-primary w-100 option-btn">
+          {{ exercise.option_3 }}
+        </button>
+      </div>
+    </div>
+
+    <h4 id="result" class="mt-4"></h4>
+
+    <a href="" class="btn btn-success mt-3">Next Question</a>
+  </div>
+
+  {% else %}
+  <p>No exercises added yet for this language.</p>
+  {% endif %}
+</div>
+
+<script>
+  const correct = "{{ exercise.correct_answer|default:'' }}";
+  const result = document.getElementById("result");
+
+  document.querySelectorAll(".option-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (btn.innerText === correct) {
+        btn.classList.replace("btn-outline-primary", "btn-success");
+        result.innerHTML = "✅ Correct!";
+        result.className = "text-success fw-bold";
+      } else {
+        btn.classList.replace("btn-outline-primary", "btn-danger");
+        result.innerHTML = "❌ Try Again";
+        result.className = "text-danger fw-bold";
+      }
+    });
+  });
+</script>
+
+{% endblock %}

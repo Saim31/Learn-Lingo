@@ -1,0 +1,220 @@
+{% load static %}
+    <!-- ================= CONTACT / COURSE SECTION ================= -->
+    <section class="course-section">
+      <div class="container">
+        <!-- TOP VIDEO IMAGE -->
+        <div class="course-video" data-aos="zoom-in">
+          <img
+            src="{% static 'images/language-group.jpg' %}"
+            alt="Language Students"
+          />
+          <a href="#" class="play-btn"> ▶ </a>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="row align-items-center mt-5">
+          <!-- LEFT TEXT -->
+          <div class="col-lg-5 course-content">
+            <span class="section-tag">Contact Us</span>
+
+            <h2>Select Your Language<br />Course Here</h2>
+
+            <p>
+              Achieve remarkable success in their personal and professional
+              lives. Join us in this tradition of excellence, and let us guide
+              you on your journey to mastering a new language, opening doors.
+            </p>
+          </div>
+
+          <!-- RIGHT FORM -->
+          <div class="col-lg-7">
+            <form class="course-form">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Full name"
+                  />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="Email address"
+                  />
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <select class="form-control">
+                  <option selected>English</option>
+                  <option>French</option>
+                  <option>German</option>
+                  <option>Spanish</option>
+                </select>
+              </div>
+
+              <div class="mb-4">
+                <textarea
+                  class="form-control"
+                  rows="4"
+                  placeholder="Your message"
+                ></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-course">Start Now</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <style>
+      /* ================= COURSE SECTION ================= */
+      .course-section {
+        background: #eef2ff;
+        padding: 120px 0;
+        position: relative;
+      }
+
+      /* VIDEO IMAGE */
+      .course-video {
+        position: relative;
+        max-width: 980px;
+        margin: 0 auto;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+      }
+
+      .course-video img {
+        width: 100%;
+        height: 420px;
+        object-fit: cover;
+        border-radius: 18px;
+      }
+
+      /* SOFT OVERLAY */
+      .course-video::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.15);
+      }
+
+      /* PLAY BUTTON */
+      .play-btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 75px;
+        height: 75px;
+        background: #ff5a3c;
+        border-radius: 50%;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      /* PLAY ICON */
+      .play-btn::before {
+        content: "▶";
+        font-size: 26px;
+        color: #fff;
+        margin-left: 4px;
+      }
+
+      /* RIPPLE EFFECT */
+      .play-btn span {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: rgba(255, 90, 60, 0.5);
+        animation: ripple 1.5s infinite;
+        z-index: -1;
+      }
+
+      /* RIPPLE ANIMATION */
+      @keyframes ripple {
+        0% {
+          transform: scale(1);
+          opacity: 0.8;
+        }
+        100% {
+          transform: scale(1.8);
+          opacity: 0;
+        }
+      }
+
+      /* CONTENT */
+      .course-content {
+        padding-right: 50px;
+      }
+
+      .course-content h2 {
+        font-size: 40px;
+        font-weight: 800;
+        color: #0b1c39;
+        line-height: 1.2;
+        margin-bottom: 20px;
+      }
+
+      .course-content p {
+        font-size: 15px;
+        color: #555;
+        max-width: 430px;
+      }
+
+      /* FORM */
+      .course-form {
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.08);
+      }
+
+      .course-form .form-control {
+        padding: 14px 16px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        font-size: 14px;
+      }
+
+      .course-form .form-control:focus {
+        border-color: #ff5a3c;
+        box-shadow: 0 0 0 3px rgba(255, 90, 60, 0.15);
+      }
+
+      /* BUTTON */
+      .btn-course {
+        background: #ff5a3c;
+        color: #fff;
+        font-weight: 600;
+        padding: 13px 36px;
+        border-radius: 8px;
+        border: none;
+        transition: all 0.3s ease;
+      }
+
+      .btn-course:hover {
+        background: #e94b2f;
+        transform: translateY(-2px);
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 991px) {
+        .course-video img {
+          height: 300px;
+        }
+
+        .course-content {
+          padding-right: 0;
+          margin-bottom: 40px;
+        }
+      }
+    </style>
